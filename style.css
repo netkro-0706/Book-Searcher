@@ -29,6 +29,8 @@ body{
 }
 .search-ipt{
     width: 280px;
+    color: blue;
+    font-size:large;
 }
 .search-ipt:focus {
     outline:none;
@@ -49,11 +51,14 @@ body{
 .book-info{
     display: flex;
     border-bottom: 1px solid #e9e9e9;
-    margin: 10px;
+    padding: 10px;
 }
 .book-detail{
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
+    width: 100%;
+    height: 100%;
 }
 
 .book-list-select-nav{
@@ -68,11 +73,11 @@ body{
 .book-img{
     margin-right: 10px;
 }
-.book-detail{
-    margin-left: 10px;
-}
 .book-title{
     font-weight: bold;
+}
+.book-contents{
+    min-height: 3em;
 }
 .book-last-line{
     display: flex;
