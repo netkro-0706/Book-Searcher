@@ -96,7 +96,18 @@ body{
     border: 1px solid rgba(149, 149, 255, 0.3);
 }
 
+.page-ipt{
+    width: 80px;
+}
+.page-btn{
+    background: rgb(86, 159, 255);
+    border-radius: 50%;
+}
 
+
+.display-none{
+    display: none;
+}
 
 @media (max-width: 767px) {
     
