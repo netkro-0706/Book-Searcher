@@ -1,3 +1,9 @@
+/*
+    used API : https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
+
+    Last update : 2022-04-08
+*/
+
 let searchInput = document.getElementById("search-ipt");
 let searchButton = document.getElementById("search-btn");
 let bookHTML = document.getElementById("book-list");
@@ -30,22 +36,24 @@ searchInput.addEventListener("click", () => {
 
 searchInput.addEventListener("keyup", e => {
     if (e.key == "Enter") {
-        url_query = searchInput.value;
-        searchInput.value = "";
-        getLatest();
+        search_fnc();    
     }
 });
-
 searchButton.addEventListener("click", () => {
-    url_query = searchInput.value;
-    searchInput.value = "";
-    getLatest();
+    search_fnc();
 });
 
 pageButton.addEventListener("click", ()=>{
     page=pageInput.value;
     getLatest();
-})
+});
+
+let search_fnc=()=>{
+    url_query = searchInput.value;
+    searchInput.value = "";
+    page=1;
+    getLatest();
+}
 
 const getLatest = () => {
     url_sort = "latest";
@@ -66,7 +74,7 @@ const getBookList = async () => {
 
         let respones = await fetch(url, { headers: header });
         let data = await respones.json();
-        console.log(respones);
+        //console.log(respones);
         if(respones.status==200){
             if (data.meta.pageable_count == 0) {
                 throw new Error("해당 검색결과 없음");
@@ -74,17 +82,20 @@ const getBookList = async () => {
 
             books = data.documents;
             page_count = data.meta.pageable_count;
+            
+            //페이지 로드 값을 전역변수로 넘기기
             Max_page = Math.ceil(page_count/10);
             bool_end = data.meta.is_end;
-            console.log(data);
-            console.log(books);
+            
+            //console.log(data);
+            //console.log(books);
             render();
         } else {
             throw new Error(data.message);
         }
 
     } catch (error) {
-        console.log("error : ", error.message);
+        //console.log("error : ", error.message);
         errorRender(error.message);
     }
 }
@@ -154,7 +165,6 @@ const pagenation = () => {
     
     let last_group_page = Max_page;
     let first_group_page = Math.ceil(last_group_page/5)*5-4;
-    console.log("nowPage : ", nowPage, first_group_page, last_group_page);
 
     pageNationHTML = `
             <li class="page-item ${nowPage<=5?"display-none":""}">
@@ -169,7 +179,7 @@ const pagenation = () => {
             </li>`
 
             for(firstPage;firstPage<=lastPage;firstPage++){
-                if(lastPage>last_group_page){
+                if(firstPage>last_group_page){
                     break;
                 }
                 pageNationHTML += `
