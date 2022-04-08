@@ -18,10 +18,13 @@ body{
     text-align: center;
 }
 .search-wrap{
+    width: 330px; 
+    height: 45px;
     margin:20px 50px;
     padding: 6px;
     border: 1px solid blueviolet;
     border-radius: 20px;
+    position: relative;
 }
 .search-ipt, .search-btn{
     height: 30px;
@@ -31,6 +34,8 @@ body{
     width: 280px;
     color: blue;
     font-size:large;
+    position: absolute;
+    left: 15px;
 }
 .search-ipt:focus {
     outline:none;
@@ -38,6 +43,8 @@ body{
 .search-btn{
     background: rgb(86, 159, 255);
     border-radius: 50%;
+    position: absolute;
+    right: 5px;
 }
 .carousel-inner{
     max-width: 150px;
@@ -113,20 +120,85 @@ body{
 }
 
 .page-ipt{
-    width: 80px;
+    width: 40px;
 }
 .page-btn{
     border: none;
 }
-
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+    appearance: none;
+}
 
 .display-none{
     display: none;
 }
 
-@media (max-width: 767px) {
-    
-  }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
+    body{
+        max-width: 100%;
+    }
+    body *{
+        max-width: 100%;
+    }
+    .main-wrap{
+        width: 100%;
+        min-width: auto;
+    }
+    .header-img-wrap, .carousel{
+        display: none;
+    }
+    .center-wrap{
+        margin-top: 20px;
+    }
+    .title-wrap h2{
+        font-size: 60px;
+    }
+    .search-ipt{
+        min-width: 170px;
+        width: 275px;
+    }
 
-}
+    .book-wrap{
+        width: 90%;
+        margin: 0 auto;
+    }
+    .book-detail{
+        width: 590px;
+    }
+    .book-img{
+        margin: auto;
+    }
+  }
+  @media (max-width: 425px) {
+    .search-wrap{
+        max-width: 280px;
+        min-width: 200px;
+    }
+    .search-ipt{
+        width: 170px;
+    }
+    .display-device{
+        display: none;
+    }
+    .book-info{
+        display: block;
+    }
+    .book-img{
+        width: auto;
+        text-align: center;
+        margin: 8px auto;
+    }
+    .book-authors, .book-contents{
+        margin: 5px auto;
+    }
+
+    .goingPage-wrap{
+        display: none;
+    }
+  }
+  @media (max-width: 320px) {
+    .search-wrap{
+        max-width: 220px;
+    }
+  }

@@ -44,7 +44,12 @@ searchButton.addEventListener("click", () => {
 });
 
 pageButton.addEventListener("click", ()=>{
+    if(pageInput.value>Max_page){
+        alert(`입력된 페이지가 마지막 페이지 보다 큽니다. 마지막 페이지 : ${Max_page}`);
+        return;
+    }
     page=pageInput.value;
+    pageInput.value='';
     getLatest();
 });
 
@@ -88,7 +93,7 @@ const getBookList = async () => {
             bool_end = data.meta.is_end;
             
             //console.log(data);
-            //console.log(books);
+            console.log(books);
             render();
         } else {
             throw new Error(data.message);
@@ -117,12 +122,18 @@ const render = () => {
                 </div>
                 <div class="book-detail">
                 <span class="book-title">${item.title}</span>
-                <span>저자 ${item.authors.length <= 1 ? item.authors : (item.authors[0] + ", " + item.authors[1] + " 외")}
+                <span class="book-authors">${item.authors.length <= 1 
+                    ? item.authors=="" ? "저자 미상" : "저자 " + item.authors 
+                    : (item.authors[0] + ", " + item.authors[1] + " 외")}
                 ${item.translators.length <= 1
                     ? item.translators.length == 1 ? "| 역자 " + item.translators : ""
                     : "| 역자 " + (item.translators[0] + ", " + item.translators[1] + " 외")}</span>
-                <span>출판 ${item.publisher} | ${item.datetime.slice(0, 10)}</span>
-                <span>ISBN : ${item.isbn.substring(0, item.isbn.indexOf(' '))}</span>
+                <span class="display-device">출판 ${item.publisher=="" ? "불명" : item.publisher}
+                 ${item.datetime==""? "" : "| " + item.datetime.slice(0, 10)}</span>
+                <span class="display-device">ISBN : ${
+                    item.isbn.length==24 
+                    ? item.isbn.substring(0, item.isbn.indexOf(' ')) 
+                    : item.isbn.length<=13 ?  item.isbn : item.isbn.replace(' ', '') }</span>
                 <span class="book-contents">${item.contents == ""
                     ? "내용 비표시"
                     : item.contents.length <= 100 ? item.contents : item.contents.slice(0, 100) + "..."}</span>
