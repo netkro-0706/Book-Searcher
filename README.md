@@ -13,3 +13,6 @@ Javascript
 Bootstrap  
 Font Awesome  
 API - [Kakao Developers -> search-book](https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book)
+
+## 개선사항
+API와 받은 meta값을 좀 더 분석 및 조합하여 필터에 가격내림차순, 가격오름차순, 판매상태순의 구현이 필요
