@@ -16,7 +16,7 @@ Font Awesome
 API - [Kakao Developers -> search-book](https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book)
 
 ## 기능
-+ 미디어 쿼리를 이용하여 반응형 웹페이지를 구현  
++ 미디어 쿼리를 이용하여 화면 크기별로 UI가 변하여 보이도록 반응형 웹페이지를 구현  
   PC  
   ![bookSearcher main_sizing](https://user-images.githubusercontent.com/74494210/162488628-2e47c692-0c0d-4001-b573-68df4b3f90c7.png)  
   Tablet  
@@ -24,8 +24,8 @@ API - [Kakao Developers -> search-book](https://developers.kakao.com/docs/latest
   Phone  
   ![bookSearcher phonesizing](https://user-images.githubusercontent.com/74494210/162489060-2296ace4-a138-4746-9ea7-dd18b932cd23.png)  
 
-+ Pagination  
-  ![pagination](https://user-images.githubusercontent.com/74494210/162489925-554c7e55-1e80-4ff0-bc72-8b8aee9b05ad.png)
++ API의 목록을 페이지 별로 보여지도록 Pagination 구현  
+![pagination](https://user-images.githubusercontent.com/74494210/162490696-50ef4bac-0449-49ee-93ad-c47fa93c7357.png)  
 
 
 
