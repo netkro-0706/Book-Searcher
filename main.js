@@ -89,8 +89,8 @@ const getBookList = async () => {
             page_count = data.meta.pageable_count;
             
             //페이지 로드 값을 전역변수로 넘기기
-            Max_page = Math.ceil(page_count/10);
-            bool_end = data.meta.is_end;
+            //Max_page = Math.ceil(page_count/10);
+            //bool_end = data.meta.is_end;
             
             //console.log(data);
             console.log(books);
