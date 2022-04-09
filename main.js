@@ -13,7 +13,7 @@ let pageButton = document.getElementById("page-btn");
 
 let recommend_rand = Math.floor(Math.random() * 4);
 let books;
-let page=1;
+let page = 1;
 let page_count;
 let Max_page;
 let bool_end;
@@ -36,27 +36,27 @@ searchInput.addEventListener("click", () => {
 
 searchInput.addEventListener("keyup", e => {
     if (e.key == "Enter") {
-        search_fnc();    
+        search_fnc();
     }
 });
 searchButton.addEventListener("click", () => {
     search_fnc();
 });
 
-pageButton.addEventListener("click", ()=>{
-    if(pageInput.value>Max_page){
+pageButton.addEventListener("click", () => {
+    if (pageInput.value > Max_page) {
         alert(`입력된 페이지가 마지막 페이지 보다 큽니다. 마지막 페이지 : ${Max_page}`);
         return;
     }
-    page=parseInt(pageInput.value);
-    pageInput.value='';
+    page = parseInt(pageInput.value);
+    pageInput.value = '';
     getLatest();
 });
 
-let search_fnc=()=>{
+let search_fnc = () => {
     url_query = searchInput.value;
     searchInput.value = "";
-    page=1;
+    page = 1;
     getLatest();
 }
 
@@ -80,18 +80,18 @@ const getBookList = async () => {
         let respones = await fetch(url, { headers: header });
         let data = await respones.json();
         //console.log(respones);
-        if(respones.status==200){
+        if (respones.status == 200) {
             if (data.meta.pageable_count == 0) {
                 throw new Error("해당 검색결과 없음");
             }
 
             books = data.documents;
             page_count = data.meta.pageable_count;
-            
+
             //페이지 로드 값을 전역변수로 넘기기
-            Max_page = Math.ceil(page_count/10);
+            Max_page = Math.ceil(page_count / 10);
             bool_end = data.meta.is_end;
-            
+
             //console.log(data);
             //console.log(books);
             render();
@@ -110,7 +110,7 @@ const render = () => {
 
     try {
         //현재 페이지가 최대 페이지보다 클경우 자동으로 이전페이지로 이동 *api의 오작동 대응용
-        if(bool_end=="ture" || page>Max_page){
+        if (bool_end == "ture" || page > Max_page) {
             page--;
             getBookList();
         }
@@ -118,22 +118,21 @@ const render = () => {
             return `
             <div class="book-info">
                 <div class="book-img">
-                <img src="${item.thumbnail==""?"/images/no_image.png":item.thumbnail}">
+                <img src="${item.thumbnail == "" ? "/images/no_image.png" : item.thumbnail}">
                 </div>
                 <div class="book-detail">
                 <span class="book-title">${item.title}</span>
-                <span class="book-authors">${item.authors.length <= 1 
-                    ? item.authors=="" ? "저자 미상" : "저자 " + item.authors 
+                <span class="book-authors">${item.authors.length <= 1
+                    ? item.authors == "" ? "저자 미상" : "저자 " + item.authors
                     : (item.authors[0] + ", " + item.authors[1] + " 외")}
                 ${item.translators.length <= 1
                     ? item.translators.length == 1 ? "| 역자 " + item.translators : ""
                     : "| 역자 " + (item.translators[0] + ", " + item.translators[1] + " 외")}</span>
-                <span class="display-device">출판 ${item.publisher=="" ? "불명" : item.publisher}
-                 ${item.datetime==""? "" : "| " + item.datetime.slice(0, 10)}</span>
-                <span class="display-device">ISBN : ${
-                    item.isbn.length==24 
-                    ? item.isbn.substring(0, item.isbn.indexOf(' ')) 
-                    : item.isbn.length<=13 ?  item.isbn : item.isbn.replace(' ', '') }</span>
+                <span class="display-device">출판 ${item.publisher == "" ? "불명" : item.publisher}
+                 ${item.datetime == "" ? "" : "| " + item.datetime.slice(0, 10)}</span>
+                <span class="display-device">ISBN : ${item.isbn.length == 24
+                    ? item.isbn.substring(0, item.isbn.indexOf(' '))
+                    : item.isbn.length <= 13 ? item.isbn : item.isbn.replace(' ', '')}</span>
                 <span class="book-contents">${item.contents == ""
                     ? "내용 비표시"
                     : item.contents.length <= 100 ? item.contents : item.contents.slice(0, 100) + "..."}</span>
@@ -168,58 +167,53 @@ const errorRender = (errorEvent) => {
 
 const pagenation = () => {
     let pageNationHTML = '';
-    
-    let nowPage=page;
-    
-    let page_group = Math.ceil(nowPage/5);
-    let lastPage = page_group*5;
-    let firstPage = lastPage-4;
-    
+
+    let nowPage = page;
+
+    let page_group = Math.ceil(nowPage / 5);
+    let lastPage = page_group * 5;
+    let firstPage = lastPage - 4;
+
     let last_group_page = Max_page;
-    let first_group_page = Math.ceil(last_group_page/5)*5-4;
+    let first_group_page = Math.ceil(last_group_page / 5) * 5 - 4;
 
-    let pageNation_first = 
-        nowPage<4
-        ? firstPage
-        : page>last_group_page-2 ? last_group_page-4 : nowPage-2 ;
-
-    let pageNation_last = 
-        nowPage<last_group_page-2
-        ? nowPage<4 ? lastPage : nowPage+2
-        : lastPage ;
-
-    // console.log("nowPage : ", nowPage,
-    //             "fistPage : ", firstPage,
-    //             "lastPage : ", lastPage,
-    //             "pageNation_first : ", pageNation_first,
-    //             "pageNation_last : ", pageNation_last,
-    //             "last_group_page : ", last_group_page );
+    let pagelist_log = {
+        "1.nowPage": nowPage,
+        "2.fistPage": firstPage,
+        "3.lastPage": lastPage,
+        "4.first_group_page": first_group_page,
+        "5.last_group_page": last_group_page,
+    }
+    console.log(pagelist_log);
 
     pageNationHTML = `
-            <li class="page-item ${nowPage<=5?"display-none":""}">
+            <li class="page-item ${nowPage <= 3 || lastPage <= 5 ? "display-none" : ""}">
                 <a class="page-link" href="#" aria-label="Previous" onclick="pageMove(1)">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item ${nowPage==1?"display-none":""}">
+            <li class="page-item ${nowPage == 1 ? "display-none" : ""}">
                 <a class="page-link" href="#" aria-label="Previous" onclick="pageMove(page-1)">
                   <span aria-hidden="true">&lt;</span>
                 </a>
             </li>`
 
-            for(pageNation_first;pageNation_first<=pageNation_last;pageNation_first++){
-                pageNationHTML += `
-                    <li class="page-item"><a class="page-link" href="#" onclick="pageMove(${pageNation_first})">${pageNation_first}</a></li>
+    for (firstPage; firstPage<=lastPage; firstPage++) {
+        if(firstPage>last_group_page){
+            break;
+        }
+        pageNationHTML += `
+                    <li class="page-item"><a class="page-link" href="#" onclick="pageMove(${firstPage})">${firstPage}</a></li>
                     `
-            }
+    }
 
     pageNationHTML += `
-            <li class="page-item ${nowPage==last_group_page?"display-none":""}">
+            <li class="page-item ${nowPage == last_group_page ? "display-none" : ""}">
                 <a class="page-link" href="#" aria-label="Next" onclick="pageMove(page+1)">
                   <span aria-hidden="true">&gt;</span>
                 </a>
             </li>
-            <li class="page-item ${nowPage>=first_group_page?"display-none":""}">
+            <li class="page-item ${nowPage >= first_group_page || firstPage == 1 ? "display-none" : ""}">
                 <a class="page-link" href="#" aria-label="Next" onclick="pageMove(${last_group_page})">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
@@ -228,8 +222,8 @@ const pagenation = () => {
     pageHTML.innerHTML = pageNationHTML;
 }
 
-const pageMove=(targetNum)=>{
-    page=targetNum;
+const pageMove = (targetNum) => {
+    page = targetNum;
     getBookList();
 }
 
