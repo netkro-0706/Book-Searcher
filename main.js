@@ -48,7 +48,7 @@ pageButton.addEventListener("click", ()=>{
         alert(`입력된 페이지가 마지막 페이지 보다 큽니다. 마지막 페이지 : ${Max_page}`);
         return;
     }
-    page=pageInput.value;
+    page=parseInt(pageInput.value);
     pageInput.value='';
     getLatest();
 });
@@ -92,8 +92,8 @@ const getBookList = async () => {
             Max_page = Math.ceil(page_count/10);
             bool_end = data.meta.is_end;
             
-            console.log(data);
-            console.log(books);
+            //console.log(data);
+            //console.log(books);
             render();
         } else {
             throw new Error(data.message);
@@ -168,14 +168,32 @@ const errorRender = (errorEvent) => {
 
 const pagenation = () => {
     let pageNationHTML = '';
-
+    
     let nowPage=page;
+    
     let page_group = Math.ceil(nowPage/5);
     let lastPage = page_group*5;
     let firstPage = lastPage-4;
     
     let last_group_page = Max_page;
     let first_group_page = Math.ceil(last_group_page/5)*5-4;
+
+    let pageNation_first = 
+        nowPage<4
+        ? firstPage
+        : page>last_group_page-2 ? last_group_page-4 : nowPage-2 ;
+
+    let pageNation_last = 
+        nowPage<last_group_page-2
+        ? nowPage<4 ? lastPage : nowPage+2
+        : lastPage ;
+
+    // console.log("nowPage : ", nowPage,
+    //             "fistPage : ", firstPage,
+    //             "lastPage : ", lastPage,
+    //             "pageNation_first : ", pageNation_first,
+    //             "pageNation_last : ", pageNation_last,
+    //             "last_group_page : ", last_group_page );
 
     pageNationHTML = `
             <li class="page-item ${nowPage<=5?"display-none":""}">
@@ -189,12 +207,9 @@ const pagenation = () => {
                 </a>
             </li>`
 
-            for(firstPage;firstPage<=lastPage;firstPage++){
-                if(firstPage>last_group_page){
-                    break;
-                }
+            for(pageNation_first;pageNation_first<=pageNation_last;pageNation_first++){
                 pageNationHTML += `
-                    <li class="page-item"><a class="page-link" href="#" onclick="pageMove(${firstPage})">${firstPage}</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="pageMove(${pageNation_first})">${pageNation_first}</a></li>
                     `
             }
 
