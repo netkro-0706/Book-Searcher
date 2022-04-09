@@ -118,7 +118,7 @@ const render = () => {
             return `
             <div class="book-info">
                 <div class="book-img">
-                <img src="${item.thumbnail == "" ? "/images/no_image.png" : item.thumbnail}">
+                <img src="${item.thumbnail == "" ? "images/no_image.png" : item.thumbnail}">
                 </div>
                 <div class="book-detail">
                 <span class="book-title">${item.title}</span>
