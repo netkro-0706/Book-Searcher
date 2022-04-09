@@ -1,7 +1,7 @@
 /*
     used API : https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
 
-    Last update : 2022-04-08
+    Last update : 2022-04-09
 */
 
 let searchInput = document.getElementById("search-ipt");
@@ -177,14 +177,14 @@ const pagenation = () => {
     let last_group_page = Max_page;
     let first_group_page = Math.ceil(last_group_page / 5) * 5 - 4;
 
-    let pagelist_log = {
-        "1.nowPage": nowPage,
-        "2.fistPage": firstPage,
-        "3.lastPage": lastPage,
-        "4.first_group_page": first_group_page,
-        "5.last_group_page": last_group_page,
-    }
-    console.log(pagelist_log);
+    // let pagelist_log = {
+    //     "1.nowPage": nowPage,
+    //     "2.fistPage": firstPage,
+    //     "3.lastPage": lastPage,
+    //     "4.first_group_page": first_group_page,
+    //     "5.last_group_page": last_group_page,
+    // }
+    // console.log(pagelist_log);
 
     pageNationHTML = `
             <li class="page-item ${nowPage <= 3 || lastPage <= 5 ? "display-none" : ""}">
